@@ -1,0 +1,25 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-theme="cmyk">
+<head>
+    <title>{% block title %}Thank You{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    {% if user.is_authenticated %}
+    <meta http-equiv="refresh" content="5;URL='{% url 'jobs' %}'" />
+    {% endif %}
+</head>
+
+<body onload="confetti();setInterval(confetti, 5000);">
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">Thank you for applying!</h1>
+            <p class="py-6">You may close this tab or go back to the <a href="{% url 'apply' job.id %}" class="link">job listing</a>.</p>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

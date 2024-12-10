@@ -1,0 +1,37 @@
+{% extends "ats/base.html" %}
+
+{% block title %}Jobs{% endblock %}
+{% block page_title %}Jobs{% endblock %}
+
+{% block content %}
+{% if jobs %}
+<h1 class="text-2xl font-bold">Jobs</h1>
+<div class="overflow-x-auto">
+    <table class="table">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th>Job Title</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Candidates</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr>
+            <td>{{job.job_title}}</td>
+            <td>{{job.location}}</td>
+            <td>{{job.status}}</td>
+            <td>{{job.othermodel_count}}</td>
+            <td><a href="{% url 'edit' job.id %}">Edit</a> | <a href="{% url 'opening' job.id %}">Apply</a> | <a href="{% url 'candidates' job.id %}">Candidates</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {{ block.super }}
+  {% endif %}
+{% endblock content %}

@@ -1,0 +1,106 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-theme="cmyk">
+<head>
+    <title>Apply for {{job.job_title}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div class="container mx-auto min-h-screen mt-20 m-8">
+        <a href="{% url "opening" job.id %}" class="link">&lt; Go Back to Job Listing</a>
+    <h1 class="text-2xl font-bold">Apply for {{job.job_title}}</h1>
+    <form action="{% url 'apply' job.id %}" method="post" enctype="multipart/form-data" class="form space-y-4">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if not field.is_hidden %}
+            <label class="block text-sm font-medium" for="{{ field.auto_id }}">{{ field.label }}</label>
+            {% endif %}
+            {{ field }}
+        {% endfor %}
+        <!-- <input type="file" name="video" class="file-input file-input-bordered w-full max-w-xs" accept="video/*" id="videocap"> -->
+        <input type="hidden" name="job" value="{{job.id}}">
+        <div>
+        <input type="submit" value="Apply" class="btn btn-primary">
+        </div>
+    </form>
+    <p>Please answer a skills question, recorded on video</p>
+    <p class="hide" id="question">{{job.question}}</p>
+    <button onclick="captureMedia()" class="btn">Start Recording</button>
+    <button onclick="stop()" class="btn">Stop Recording</button>
+    <video autoplay="true" id="webcamVideo" style="width:300px;height:300px;"></video>
+    <style>
+        .hide {
+            display:none;
+        }
+    </style>
+</div>
+<script>
+    
+    async function captureMedia() {
+        question.classList.toggle('hide')
+        navigator.mediaDevices.getUserMedia({ video: true })
+           .then(function(stream) {
+                // Set the source of the video element to the webcam stream
+                var video = document.getElementById('webcamVideo');
+                video.srcObject = stream;
+                
+                // Add error handling for the stream
+                stream.onerror = function(error) {
+                    console.error("Error accessing the webcam: ", error);
+                };
+            })
+           .catch(function(err) {
+                console.log("An error occurred: " + err);
+            });
+        try {
+            window.stream = await navigator.mediaDevices.getUserMedia({ video: true,  audio: true });
+
+            // Create a MediaRecorder instance
+            window.mediaRecorder = new MediaRecorder(stream, { mimeType: "video/webm"});
+            
+            // Function to handle data available event
+            const handleDataAvailable = (e) => {
+                if (e.data.size > 0) {
+                    // Convert the recorded data to a Blob
+                    const blob = new Blob([e.data], { type: 'video/webm;codecs=vp8' });
+                    // Create a URL for the Blob
+                    
+            let file = new File([blob], "video0.webm",{type:"video/webm", lastModified:new Date().getTime()});
+            let container = new DataTransfer();
+
+            container.items.add(file);
+            videocap.files = container.files;
+            document.getElementById('webcamVideo').srcObject = null;
+            console.log('done')
+                }
+            };
+    
+            // Start recording
+            mediaRecorder.start();
+    
+            // Listen for dataavailable events
+            mediaRecorder.addEventListener('dataavailable', handleDataAvailable);
+    
+            // Stop recording after 10 seconds (for demonstration purposes)
+            //setTimeout(() => {
+            //    mediaRecorder.stop();
+            //    stream.getTracks().forEach(track => track.stop());
+            //}, 5000); // Adjust the duration as needed
+
+          //let blob = new Blob([videoStream], { type: 'video/mp4' });
+        } catch (error) {
+          console.error('Error capturing media:', error);
+        }
+      }
+
+      function stop() {
+        window.mediaRecorder.stop();
+        window.stream.getTracks().forEach(track => track.stop());
+      }
+</script>
+</body>
+</html>

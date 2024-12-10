@@ -1,0 +1,80 @@
+<html data-theme="cmyk">
+    <head>
+        <title>Start hiring with ATS</title>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+          <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+        
+    </head>
+    <body>
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content flex-col lg:flex-row-reverse">
+    <div class="text-center lg:text-left">
+      <h1 class="text-5xl font-bold">Start hiring with ATS!</h1>
+      <p class="py-6">ATS is a demonstration of implementing an applicant tracking system in Python.</p>
+      <p class="py-6">If you have an account then <a href="{% url 'login' %}" class="link">sign in</a></p>
+    </div>
+    <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <form method="post" action="{% url 'signup' %}" class="card-body"  autocomplete="off">
+        {% csrf_token %}
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Email</span>
+          </label>
+          <input type="email" name="username" placeholder="you@company.com" class="input input-bordered" required  autocomplete="new-password" />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Password</span>
+          </label>
+          <input type="password"  name="password" placeholder="Password" class="input input-bordered" required  autocomplete="new-password" />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Hiring For</span>
+          </label>
+          <textarea name="description" placeholder="Product Manager in Boston, MA, Experienced in Python" class="textarea textarea-bordered w-full max-w-xs"></textarea>
+        </div>
+        <div class="form-control mt-6">
+          <input type="submit" class="btn btn-primary" value="Sign Up">
+          <input type="hidden" name="next" value="{{ next }}">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--
+{% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="login">
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+
+  {# Assumes you set up the password_reset view in your URLconf #}
+  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+-->
+</body>
+</html>

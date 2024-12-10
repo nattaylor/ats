@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cmyk">
+<head>
+    <title>Apply for {{job.job_title}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div class="container mx-auto min-h-screen mt-20 m-8">
+    <h1 class="text-2xl font-bold">Apply for {{job.job_title}}</h1>
+    <p class="p-2">{{user.profile.name}}</p>
+    <pre class="w-full whitespace-break-spaces">{{job.description}}</pre>
+    <a href="{% url 'apply' job.id %}" class="btn btn-primary">Apply Now</a>
+</body>
+</html>
+

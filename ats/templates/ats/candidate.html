@@ -1,0 +1,33 @@
+{% extends "ats/base.html" %}
+
+{% block title %}{{candidate.first_name}} {{candidate.last_name}}{% endblock %}
+
+{% block content %}
+<div class="text-sm breadcrumbs">
+    <ul>
+      <li><a href="{% url 'jobs' %}" class="link">Jobs</a></li> 
+      <li><a href="{% url 'candidates' job.id %}" class="link">{{job.job_title}}</a></li> 
+      <li>{{candidate.first_name}} {{candidate.last_name}}</li>
+    </ul>
+  </div>
+<h1 class="text-2xl  font-bold">Candidate: {{candidate.first_name}} {{candidate.last_name}}</h1>
+<div class="space-y-1">
+    <div class="text-xs font-bold">Email</div>
+    <div class="pb-4"><a href="mailto:{{candidate.email}}" class="link">{{candidate.email}}</a></div>
+
+    <div class="text-xs font-bold">Job Title</div>
+    <div class="pb-4">{{candidate.job_title}}</div>
+
+    <div class="text-xs font-bold">Question</div>
+    <div class="pb-4">{{job.question}}</div>
+
+    <div class="text-xs font-bold">Answer</div>
+    <div class="pb-4">{{candidate.transcription}}</div>
+
+    <div class="text-xs font-bold">Score</div>
+    <div class="pb-4">{{candidate.score}}</div>
+
+    <div class="text-xs font-bold">Analysis</div>
+    <div class="pb-4">{{candidate.analysis}}</div>
+</div>
+{% endblock content %}

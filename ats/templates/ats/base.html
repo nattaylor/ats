@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cmyk">
+<head>
+    <title>{% block title %}My amazing site{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    {% block head_extra %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar bg-primary text-primary-content mt-0 fixed w-full z-10 top-0">
+        <div class="navbar-start">
+          <div class="dropdown">
+            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+            </div>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li><a href="/">Jobs</a></li>
+            </ul>
+          </div>
+          <a href="/" class="btn btn-ghost text-xl hover:animate-pulse">ATS</a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1">
+            <li><a href="/">Jobs</a></li>
+          </ul>
+        </div>
+        <div class="navbar-end">
+          <a class="btn" href="javascript:create.showModal();confetti({origin:{x:0.5, y:document.body.clientHeight/document.body.scrollHeight}});" role="button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            New Job</a>
+        </div>
+    </nav>
+
+    {% block full %}{% endblock full %}
+    <div class="container mx-auto min-h-screen mt-20 m-8">
+        {% block content %}
+        <div class="hero min-h-screen bg-base-200">
+            <div class="hero-content text-center">
+              <div class="max-w-md">
+                <h1 class="text-5xl font-bold">Post A Job</h1>
+                <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+                <button class="btn btn-primary" onclick="create.showModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      </svg>
+                    New Job
+                </button>
+              </div>
+            </div>
+          </div>
+        {% endblock content %}
+    </div>
+    
+    <dialog id="create"class="modal">
+        <div class="modal-box">
+            <h1 class="text-2xl">New Job</h1>
+            <form action="{% url 'create' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                  <label class="block text-sm font-medium" for="job_title">Description</label>
+                <textarea name="job_title" placeholder="Product Manager in Boston, MA, Experienced in Python" class="textarea textarea-bordered w-full max-w-xs"></textarea>
+                </div>
+                <div class="mb-4">
+                <input type="submit" value="Next" class="btn btn-primary">
+                </div>
+            </form>
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+              </form>
+        </div>
+      </dialog>
+</body>
+</html>

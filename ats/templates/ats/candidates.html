@@ -1,0 +1,36 @@
+{% extends "ats/base.html" %}
+
+{% block title %}Candidates for {{job.job_title}}{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl  font-bold">Candidates</h1>
+<p>Candidates for {{job.job_title}}</p>
+<div class="overflow-x-auto">
+    <table class="table">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Job Title</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in candidates %}
+        <tr>
+            <td>
+              <div class="avatar placeholder">
+                <div class="bg-neutral text-neutral-content rounded-full w-8">
+                  <span class="text-xs">{{ c.first_name|make_list|first }}</span>
+                </div>
+              </div>
+              <a href="{% url 'candidate' job.id c.id %}" class="link">{{c.first_name}} {{c.last_name}}</a>
+            </td>
+            <td>{{c.job_title|default_if_none:"--"}}</td>
+            <td>{{c.score|default_if_none:'--'}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
