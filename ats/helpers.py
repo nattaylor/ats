@@ -7,7 +7,7 @@ import subprocess
 from openai import OpenAI
 import tempfile
 
-lm = dspy.OpenAI(model="gpt-3.5-turbo-0613", max_tokens=300, model_type="chat")
+lm = dspy.OpenAI(model="gpt-4o-mini", max_tokens=300, model_type="chat")
 dspy.settings.configure(lm=lm)
 client = OpenAI()
 
