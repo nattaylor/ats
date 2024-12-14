@@ -41,7 +41,7 @@ def create(request):
     job = Job(job_title=request.POST["job_title"], location="", description='', user=request.user)
     job.save()
     print(job.id)
-    async_task(ats.helpers.generate_job_description, request.POST["job_title"], job.id)
+    ats.helpers.generate_job_description, request.POST["job_title"], job.id
     return render(request, 'ats/creating.html', {"job":job})
     # return HttpResponseRedirect(reverse("edit", args=(job_id,)))
 
